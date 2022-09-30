@@ -53,12 +53,14 @@ return {
       vim.keymap.set('n', '<C-f>' .. key, tree_command)
       vim.keymap.set('n', '<C-f><C-' .. key .. '>', tree_command)
     end
+      vim.keymap.set('n', '<C-e>', ':NeoTreeFocusToggle<CR>')
 
     n_map('f', '')
     n_map('v', 'vsplit')
     n_map('x', 'split')
     n_map('h', 'split')
     n_map('t', 'tabedit %')
+    n_map('C-e', ':NeoTreeFocusToggle')
   end,
   vsnip = function()
     local function v_map(key, condition, on_true)
