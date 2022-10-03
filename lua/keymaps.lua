@@ -38,6 +38,8 @@ return {
 
     -- Convenient Control+Backspace insert mode mapping
     keymap('i', '<C-backspace>', '<esc>ciw')
+-- Press jk fast to enter
+keymap("i", "jk", "<ESC>")
   end,
   fugitive = function()
     keymap('n', '<leader>gs', ':Git<CR>', {silent = true})
