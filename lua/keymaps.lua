@@ -1,31 +1,60 @@
 -- Shorten function name
 local keymap = vim.keymap.set
+local opts = { noremap = true, silent = true }
 
 return {
   vanilla = function()
+    --Remap space as leader key
+    keymap("", "<Space>", "<Nop>", opts)
     vim.g.mapleader = ' '
-    keymap('n', ';', ':')
-    keymap('n', '<leader>l', ':bnext<CR>')
-    keymap('n', '<leader>h', ':bprevious<CR>')
-    keymap('n', '<leader>bq', ':b# <BAR> bd #<CR>')
-    keymap('n', '<leader>br', ':%s/<C-r><C-w>//g<left><left>')
-    keymap('n', '<leader>th', ':set hlsearch!<CR>')
-    keymap('n', '<leader>tw', ':setlocal wrap!<CR>')
-    keymap('n', '<leader>ts', ':setlocal spell!<CR>')
-    keymap('n', '<leader>n', ':nohl<CR>')
-    keymap('n', '<leader>N', ':Rmhl<CR>')
+
+    -- Press jk fast to enter
+    keymap("i", "jk", "<ESC>")
+
+    -- Create new line without entering insert mode
+    keymap('n', 'o', 'o<ESC>', opts)
+    keymap('n', 'O', 'O<ESC>', opts)
+    keymap('v', 'o', 'o<ESC>', opts)
+    keymap('v', 'O', 'O<ESC>', opts)
+
+    -- Stay in indent mode
+    keymap("v", "<", "<gv", opts)
+    keymap("v", ">", ">gv", opts)
+
+    keymap('n', ';', ':', opts)
+    keymap('n', '<leader>l', ':bnext<CR>', opts)
+    keymap('n', '<leader>h', ':bprevious<CR>', opts)
+    keymap('n', '<leader>bq', ':b# <BAR> bd #<CR>', opts)
+    keymap('n', '<leader>br', ':%s/<C-r><C-w>//g<left><left>', opts)
+    keymap('n', '<leader>th', ':set hlsearch!<CR>', opts)
+    keymap('n', '<leader>tw', ':setlocal wrap!<CR>', opts)
+    keymap('n', '<leader>ts', ':setlocal spell!<CR>', opts)
+    keymap('n', '<leader>n', ':nohl<CR>', opts)
+    keymap('n', '<leader>N', ':Rmhl<CR>', opts)
     keymap('n', 'zS', function() require('helpers.syntax').showCursorHighlights() end)
 
     keymap('n', '<space>', 'za', {remap = true})
     keymap('n', '<C-space>', 'zA', {remap = true})
 
+    -- Resize with arrows
+    keymap("n", "<C-Up>", ":resize -2<CR>", opts)
+    keymap("n", "<C-Down>", ":resize +2<CR>", opts)
+    keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
+    keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
+
+    -- Clear highlights
+    keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
+
+
     -- Switch
-    keymap('n', '<leader>ss', ':call switcher#Switch()<CR>')
-    keymap('n', '<leader>sv', ':call switcher#SwitchWithOptions({"edit_command": "vs"})<CR>')
-    keymap('n', '<leader>sh', ':call switcher#SwitchWithOptions({"edit_command": "sp"})<CR>')
+    keymap('n', '<leader>ss', ':call switcher#Switch()<CR>', opts)
+    keymap('n', '<leader>sv', ':call switcher#SwitchWithOptions({"edit_command": "vs"})<CR>', opts)
+    keymap('n', '<leader>sh', ':call switcher#SwitchWithOptions({"edit_command": "sp"})<CR>', opts)
 
     -- Wrap
-    keymap('x', '<leader>w', ':call wrap#func()<CR>')
+    keymap('x', '<leader>w', ':call wrap#func()<CR>', opts)
+
+
 
     if vim.fn.has('win32') == 1 then
       -- Because Windows is such a great operating system,
@@ -34,12 +63,8 @@ return {
       keymap('n', '<C-Z>', function() require('term').open() end)
     end
 
-    keymap('t', '<leader>n', '<C-\\><C-N>')
+    keymap('t', '<leader>n', '<C-\\><C-N>', opts)
 
-    -- Convenient Control+Backspace insert mode mapping
-    keymap('i', '<C-backspace>', '<esc>ciw')
--- Press jk fast to enter
-keymap("i", "jk", "<ESC>")
   end,
   fugitive = function()
     keymap('n', '<leader>gs', ':Git<CR>', {silent = true})
@@ -58,7 +83,7 @@ keymap("i", "jk", "<ESC>")
       keymap('n', '<C-f>' .. key, tree_command)
       keymap('n', '<C-f><C-' .. key .. '>', tree_command)
     end
-    keymap('n', '<leader>e', ':NeoTreeFocusToggle<CR>')
+    keymap('n', '<leader>e', ':NeoTreeFocusToggle<CR>', opts)
 
     n_map('f', '')
     n_map('v', 'vsplit')
@@ -80,15 +105,16 @@ keymap("i", "jk", "<ESC>")
     local builtin = require('telescope.builtin')
     local fix_folds = require('plugins.telescope').fix_folds
 
-    keymap('n', '<leader>ff', function() builtin.find_files(fix_folds) end)
-    keymap("n", '<leader>ft', function() builtin.live_grep(fix_folds) end)
-    keymap('n', '<leader>fb', function() builtin.buffers({ show_all_buffers = true }) end)
-    keymap('n', '<leader>fg', function() require('plugins.telescope').rg(fix_folds, false) end)
+    keymap('n', '<leader>ff', function() builtin.find_files(fix_folds) end, opts)
+    keymap("n", '<leader>ft', function() builtin.live_grep(fix_folds) end, opts)
+    keymap('n', '<leader>fb', function() builtin.buffers({ show_all_buffers = true }) end, opts)
+    keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
+    keymap('n', '<leader>fg', function() require('plugins.telescope').rg(fix_folds, false) end, opts)
     keymap('n', '<leader>fG', function()
       require('plugins.telescope').rg(fix_folds, true)
-    end)
+    end, opts)
     keymap('n', '<leader>gb', builtin.git_branches)
-    keymap('n', '<leader>gt', function() require('plugins.telescope').tags() end)
+    keymap('n', '<leader>gt', function() require('plugins.telescope').tags() end, opts)
   end,
   lsp = function(client)
     if client.name == 'rust_analyzer' then
@@ -139,13 +165,21 @@ keymap("i", "jk", "<ESC>")
     keymap('t', '<leader>n', '<C-\\><C-N>:b#<CR>', { silent = true, buffer = new_term })
   end,
   dap = function()
-    keymap('n', '<F5>', ':DapContinue<CR>')
-    keymap('n', '<F10>', ':DapStepOver<CR>')
-    keymap('n', '<F11>', ':DapStepInto<CR>')
-    keymap('n', '<C-F11>', ':DapStepOut<CR>')
+    keymap('n', '<F5>', ':DapContinue<CR>', opts)
+    keymap('n', '<F10>', ':DapStepOver<CR>', opts)
+    keymap('n', '<F11>', ':DapStepInto<CR>', opts)
+    keymap('n', '<C-F11>', ':DapStepOut<CR>', opts)
 
-    keymap('n', '<leader>db', ':DapToggleBreakpoint<CR>')
+    keymap('n', '<leader>db', ':DapToggleBreakpoint<CR>', opts)
     keymap('n', '<leader>dk', function() require('dap.ui.widgets').hover() end)
+    keymap("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", opts)
+    keymap("n", "<leader>di", "<cmd>lua require'dap'.step_into()<cr>", opts)
+    keymap("n", "<leader>do", "<cmd>lua require'dap'.step_over()<cr>", opts)
+    keymap("n", "<leader>dO", "<cmd>lua require'dap'.step_out()<cr>", opts)
+    keymap("n", "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", opts)
+    keymap("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>", opts)
+    keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
+    keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
   end,
   comments = function()
     local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
