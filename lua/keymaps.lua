@@ -1,6 +1,6 @@
 return {
   vanilla = function()
-    vim.g.mapleader = ','
+    vim.g.mapleader = ' '
     vim.keymap.set('n', ';', ':')
     vim.keymap.set('n', '<leader>l', ':bnext<CR>')
     vim.keymap.set('n', '<leader>h', ':bprevious<CR>')
@@ -53,7 +53,7 @@ return {
       vim.keymap.set('n', '<C-f>' .. key, tree_command)
       vim.keymap.set('n', '<C-f><C-' .. key .. '>', tree_command)
     end
-      vim.keymap.set('n', '<C-e>', ':NeoTreeFocusToggle<CR>')
+      vim.keymap.set('n', '<leader>e', ':NeoTreeFocusToggle<CR>')
 
     n_map('f', '')
     n_map('v', 'vsplit')

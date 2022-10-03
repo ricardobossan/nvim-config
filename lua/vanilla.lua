@@ -1,4 +1,4 @@
-local default_indent = 4
+local default_indent = 2
 
 vim.opt.tabstop = default_indent
 vim.opt.softtabstop = default_indent
@@ -11,6 +11,7 @@ vim.opt.linebreak = true
 vim.opt.breakindent = true
 vim.opt.breakindentopt = 'shift:2'
 vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.cursorline = true
 vim.opt.signcolumn = 'yes'
 

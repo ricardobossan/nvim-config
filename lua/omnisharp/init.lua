@@ -131,6 +131,11 @@ return {
   show_highlights_under_cursor = function()
     request.highlight(nil, require('omnisharp.highlight').__show_highlight_handler)
   end,
+
+  activate_wrap = function ()
+   vim.opt.wrap = true
+  end,
+
   launch_debug = function()
     log.info('Launching "dotnet build"')
     vim.fn.jobstart('dotnet build', {
