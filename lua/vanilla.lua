@@ -40,6 +40,7 @@ vim.opt.completeopt = 'menu,menuone,noselect'
 
 vim.opt.shortmess:append('c')
 vim.opt.diffopt:append('algorithm:patience')
+vim.opt.clipboard = "unnamedplus"
 
 require('keymaps').vanilla()
 require('commands').vanilla()
