@@ -43,7 +43,7 @@ return {
     keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
     -- Clear highlights
-    keymap("n", "<leader>h", "<cmd>nohlsearch<CR>", opts)
+    keymap("n", "<leader>ch", "<cmd>nohlsearch<CR>", opts)
 
 
     -- Switch

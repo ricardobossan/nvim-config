@@ -26,8 +26,15 @@ nnoremap <buffer> <leader>tf <cmd>TableFormat<cr>
 " table emtpy cell
 nnoremap <buffer> <leader>tec <cmd>normal vi\|r <cr>
 
-" Enable concealing for markdown files
-setlocal conceallevel=1
-
 setlocal foldmethod=expr
 setlocal foldexpr=nvim_treesitter#foldexpr()
+
+g:vim_markdown_auto_insert_bullets
+"let g:vim_markdown_folding_style_pythonic = 1
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_fenced_languages = ['csharp=cs', 'bash=sh']
+let g:vim_markdown_frontmatter = 1
+let g:vim_markdown_toml_frontmatter = 1
+let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_conceal = 1
+setlocal conceallevel=3
