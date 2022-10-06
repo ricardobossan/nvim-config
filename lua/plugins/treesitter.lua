@@ -23,7 +23,7 @@ require('nvim-treesitter.configs').setup {
   rainbow = {
     enable = true,
     disable = { 'html', 'tsx' },
-    colors = require('ayu').rainbow_colors()
+    --colors = require('ayu').rainbow_colors()
   },
   indent = {
     enable = true,
